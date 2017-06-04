@@ -62,22 +62,45 @@ test_set = test_datagen.flow_from_directory('dataset/test_set',
                                             batch_size = 32,
                                             class_mode = 'binary')
 
+# CheckPoints
+from keras.callbacks import ModelCheckpoint
+checkpointer = ModelCheckpoint(filepath="weights.hdf5", verbose=1, save_best_only=True)
+
 classifier.fit_generator(training_set,
                          steps_per_epoch = 8000,
-                         epochs = 25,
+                         epochs = 1,
                          validation_data = test_set,
                          validation_steps = 2000)
 
-# Part 3 - Making new predictions
 
-import numpy as np
-from keras.preprocessing import image
-test_image = image.load_img('dataset/single_prediction/cat_or_dog_1.jpg', target_size = (64, 64))
-test_image = image.img_to_array(test_image)
-test_image = np.expand_dims(test_image, axis = 0)
-result = classifier.predict(test_image)
-training_set.class_indices
-if result[0][0] == 1:
-    prediction = 'dog'
-else:
-    prediction = 'cat'
+# --------------------------
+## Try to save the Model weights which can be called later
+# serialize model to JSON
+
+model_json = classifier.to_json()
+with open("cnn_model.json", "w") as json_file:
+    json_file.write(model_json)
+
+# serialize weights to HDF5
+
+classifier.save_weights("cnn_model.h5")
+print("Saved model to disk")
+# --------------------------
+#classifer.save('One_convolutional_layer.h5')
+
+
+# Part 3 - Making new predictions
+#==============================================================================
+# 
+# import numpy as np
+# from keras.preprocessing import image
+# test_image = image.load_img('dataset/single_prediction/cat_or_dog_1.jpg', target_size = (64, 64))
+# test_image = image.img_to_array(test_image)
+# test_image = np.expand_dims(test_image, axis = 0)  # 4th dim becoz it predict method requires a batch
+# result = classifier.predict(test_image)
+# training_set.class_indices
+# if result[0][0] == 1:
+#     prediction = 'dog'
+# else:
+#     prediction = 'cat'
+#==============================================================================
