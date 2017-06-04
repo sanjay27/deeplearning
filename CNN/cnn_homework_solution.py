@@ -64,13 +64,13 @@ test_set = test_datagen.flow_from_directory('dataset/test_set',
 
 # CheckPoints
 from keras.callbacks import ModelCheckpoint
-checkpointer = ModelCheckpoint(filepath="weights.hdf5", verbose=1, save_best_only=True)
+checkpointer = ModelCheckpoint(filepath="tmp/weights.hdf5", verbose=1, save_best_only=True)
 
 classifier.fit_generator(training_set,
-                         steps_per_epoch = 8000,
-                         epochs = 1,
+                         steps_per_epoch = 800,
+                         epochs = 3,
                          validation_data = test_set,
-                         validation_steps = 2000)
+                         validation_steps = 200)
 
 
 # --------------------------
