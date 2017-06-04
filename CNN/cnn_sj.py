@@ -47,6 +47,10 @@ classifier.add(MaxPooling2D(pool_size = (2,2)))
                                                   # And it will Divide by 2.
                                                   # becoz we want to reduce the number of Vectors & Nodes for the next step.  to make it less complex and reduce computation.
 
+# Adding a Second Convolutional Layer -> Step for improving accuracy between Training and Test dataset
+classifier.add(Conv2D(32,3,3, activation = 'relu'))
+classifier.add(MaxPooling2D(pool_size = (2,2)))
+
 # Step 3 - Flattening       # output of feature maps as single Vector with pixel's spatial structure to future connected layers
 classifier.add(Flatten())   # no need to pass any arguments here, keras knows to take the object defined previously
                             # some parethesis becoz its a function
