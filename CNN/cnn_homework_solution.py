@@ -62,6 +62,9 @@ test_set = test_datagen.flow_from_directory('dataset/test_set',
                                             batch_size = 32,
                                             class_mode = 'binary')
 
+import datetime
+print (datetime.datetime.now().strftime("%y"))
+
 # CheckPoints
 from keras.callbacks import ModelCheckpoint
 #checkpointer = ModelCheckpoint(filepath="tmp/weights.hdf5", verbose=1, save_best_only=True)
@@ -72,15 +75,15 @@ from keras.callbacks import ModelCheckpoint
 #callbacks_list = [checkpoint]
 
 # best checkpoint
-filepath="weights.best.hdf5"
+filepath="tmp/weights.best.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 callbacks_list = [checkpoint]
 
 classifier.fit_generator(training_set,
-                         steps_per_epoch = 800,
-                         epochs = 3,
+                         steps_per_epoch = 8000,
+                         epochs = 25,
                          validation_data = test_set,
-                         validation_steps = 200,
+                         validation_steps = 2000,
                          callbacks=callbacks_list)
 
 
